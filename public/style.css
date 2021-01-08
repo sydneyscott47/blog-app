@@ -19,3 +19,262 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.error {
+  color: red;
+}
+
+/*userpage styling*/
+.welcome {
+  font-size: 2em;
+  text-align: center;
+}
+
+input,
+label {
+  margin: 5px;
+  font-size: 0.7em;
+}
+
+.form-group {
+  margin: 30px auto;
+  width: 50%;
+  font-size: 1.5em;
+}
+
+.form-control {
+  float: left;
+}
+.form-group button {
+  font-size: 0.75em;
+  margin: 0em 35%;
+}
+.form-group button:hover {
+  background-color: lightgreen;
+}
+
+#inputStreet {
+  width: 85%;
+}
+
+#inputCity {
+  width: 45%;
+}
+
+#inputState {
+  width: 17%;
+  font-size: 0.85em;
+}
+
+#inputZip {
+  width: 20%;
+}
+
+#inputCounty {
+  width: 45%;
+}
+
+#inputCountry {
+  width: 50%;
+}
+
+/* all product styling */
+.main {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.all_product_container {
+  color: black;
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  margin: 2em;
+  justify-content: space-around;
+}
+
+aside {
+  height: 100%;
+  width: 10em; /* Set the width of the sidebar */
+  background-color: gray;
+  padding: 1em;
+  color: white;
+}
+
+.filter {
+  color: white;
+}
+
+.filter:hover {
+  color: black;
+}
+
+.filter_on {
+  color: black;
+}
+
+.product {
+  color: black;
+  width: 25%;
+  border: grey solid 2px;
+  padding: 1em;
+  margin: 1em;
+}
+
+.product img {
+  max-width: 100%;
+  max-height: 20em;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*navbar*/
+.main h1 {
+  padding-left: 1em;
+  color: white;
+}
+
+.main nav {
+  padding-right: 1em;
+}
+
+.nav_button {
+  color: white;
+
+  padding: 1em;
+}
+
+.nav_button:hover {
+  background-color: grey;
+}
+
+.black {
+  background-color: black;
+}
+
+/*singleProduct*/
+
+.single_item {
+  display: flex;
+  flex-flow: row nowrap;
+  font-size: 2em;
+}
+
+.single_item img {
+  width: 15em;
+  margin: 1em;
+  padding: 1em;
+}
+
+.single_item input {
+  width: 5em;
+}
+
+.single_item p {
+  padding-right: 1em;
+}
+
+/*signup & login pages*/
+
+.login_box {
+  display: block;
+  margin: 10% 20%;
+  border: black solid 3px;
+  padding: 1em;
+  font-size: 1.5em;
+}
+
+.login_box button {
+  font-size: 0.9em;
+}
+
+.login_box input {
+  font-size: 0.8em;
+}
+
+.login_box a {
+  text-align: center;
+  color: black;
+}
+
+.login_box a:hover {
+  color: green;
+}
+
+.login_box button:hover {
+  background-color: lightgreen;
+}
+
+/* cart styling */
+.cart_total {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cart_total h3 {
+  margin: 1em 2em;
+  font-size: 1.5em;
+}
+
+.cart_total button {
+  font-size: 1em;
+}
+
+.cart_total button:hover {
+  background-color: lightgreen;
+}
+
+.cart {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  margin: 0em 2em;
+}
+
+.cart img {
+  max-width: 15em;
+  max-height: 8em;
+}
+
+.cart select {
+  height: 3em;
+}
+
+.cart button {
+  height: 3em;
+}
+.cart button:hover {
+  background-color: lightcoral;
+}
+
+.FormGroup {
+  margin: 0 15px 20px;
+  padding: 0;
+  border-style: none;
+  background-color: #7795f8;
+  will-change: opacity, transform;
+  box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 #829fff;
+  border-radius: 4px;
+}
+
+.FormRow {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-left: 15px;
+  border-top: 1px solid #819efc;
+}
+
+.StripeElement--webkit-autofill {
+  background: transparent !important;
+}
+
+.StripeElement {
+  width: 100%;
+  padding: 11px 15px 11px 0;
+}

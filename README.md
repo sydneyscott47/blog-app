@@ -2,16 +2,6 @@
 
 _Good things come in pairs_
 
-Looking to mix up a backend with `express`/`sequelize` and a frontend with
-`react`/`redux`? That's `boilermaker`!
-
-Follow along with the boilerplate workshop to make your own! This canonical
-version can serve as a reference, or a starting point. For an in depth
-discussion into the code that makes up this repository, see the
-[Boilermaker Guided Tour][boilermaker-yt]
-
-[boilermaker-yt]: https://www.youtube.com/playlist?list=PLx0iOsdUOUmn7D5XL4mRUftn8hvAJGs8H
-
 ## Setup
 
 To use this as boilerplate, you'll need to take the following steps:
@@ -61,37 +51,6 @@ createdb $MY_APP_NAME-test
     will use while developing
   * However, it's **very** important that you **not** push it to
     Github! Otherwise, _prying eyes_ will find your secret API keys!
-  * It might look like this:
-
-```
-process.env.GOOGLE_CLIENT_ID = 'hush hush'
-process.env.GOOGLE_CLIENT_SECRET = 'pretty secret'
-process.env.GOOGLE_CALLBACK = '/auth/google/callback'
-```
-
-### OAuth
-
-* To use OAuth with Google, complete the steps above with a real client
-  ID and client secret supplied from Google
-  * You can get them from the [Google APIs dashboard][google-apis].
-
-[google-apis]: https://console.developers.google.com/apis/credentials
-
-## Linting
-
-Linters are fundamental to any project. They ensure that your code
-has a consistent style, which is critical to writing readable code.
-
-Boilermaker comes with a working linter (ESLint, with
-`eslint-config-fullstack`) "out of the box." However, everyone has
-their own style, so we recommend that you and your team work out yours
-and stick to it. Any linter rule that you object to can be "turned
-off" in `.eslintrc.json`. You may also choose an entirely different
-config if you don't like ours:
-
-* [Standard style guide](https://standardjs.com/)
-* [Airbnb style guide](https://github.com/airbnb/javascript)
-* [Google style guide](https://google.github.io/styleguide/jsguide.html)
 
 ## Start
 
