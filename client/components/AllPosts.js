@@ -1,7 +1,7 @@
 import React from 'react'
-//import {fetchAllPosts} from '../store/posts'
+import {fetchAllPosts, deletePost} from '../store/posts'
 import {connect} from 'react-redux'
-//import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 class AllPosts extends React.Component {
   // constructor() {
@@ -9,62 +9,57 @@ class AllPosts extends React.Component {
   //   this.handleAddToCart = this.handleAddToCart.bind(this)
   // }
 
-  // async componentDidMount() {
-  //   await this.props.getPosts()
-  //
-  // }
-  //
+  async componentDidMount() {
+    await this.props.getPosts()
+  }
+
   // async handleAddToCart(evt, item) {
   //   evt.preventDefault()
   //   await this.props.addToCart(item, this.props.user.id)
   // }
 
   render() {
-    return <div>hello world</div>
+    const posts = this.props.posts
+
+    return (
+      <div className="all_product_container">
+        {posts.map(post => (
+          <div className="product" key={post.id}>
+            <div>
+              <img src="" />
+            </div>
+            <div>
+              <div className="main">
+                <h3>{post.title}</h3>
+              </div>
+              {post.user && <div>By: {post.user.username}</div>}
+              <p>{post.content}</p>
+            </div>
+            <Link to={`/posts/${post.id}`}>
+              <button type="button">Read More</button>
+            </Link>
+            <button type="button" onClick={() => this.props.removePost(post)}>
+              Delete
+            </button>
+          </div>
+        ))}
+      </div>
+    )
   }
 }
 
-//   render() {
-//     return (
-//       <div className="all_product_container">
-//         {items.map(item => (
-//           <Link className="product" to={`/item/${item.id}`} key={item.id}>
-//             <div>
-//               <img src={item.image} />
-//             </div>
-//             <div>
-//               <div className="main">
-//                 <h3>{item.name}</h3>
-//                 <h3>${item.price / 100}</h3>
-//               </div>
-//               <p>{item.description}</p>
-//             </div>
-//             <button
-//               type="button"
-//               onClick={event => this.handleAddToCart(event, item)}
-//             >
-//               Add to Cart
-//             </button>
-//           </Link>
-//         ))}
-//       </div>
-//     )
-//   }
-// }
+const mapState = state => {
+  return {
+    posts: state.posts,
+    user: state.user
+  }
+}
 
-// const mapState = state => {
-//   return {
-//     posts: state.posts,
-//     user: state.user
-//   }
-// }
-//
-// const mapDispatch = dispatch => {
-//   return {
-//     getPosts: () => dispatch(fetchAllPosts()),
-//   }
-// }
+const mapDispatch = dispatch => {
+  return {
+    getPosts: () => dispatch(fetchAllPosts()),
+    removePost: post => dispatch(deletePost(post))
+  }
+}
 
-export default AllPosts
-
-//export default connect(mapState, mapDispatch)(AllPosts)
+export default connect(mapState, mapDispatch)(AllPosts)

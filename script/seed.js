@@ -19,6 +19,7 @@ async function seed() {
       // name: 'Harry Potter',
       email: 'harry.potter@email.com',
       password: 'alohomora',
+      username: 'seekr7',
       address: '4 Privet Drive',
       city: 'Surrey',
       state: 'NY',
@@ -29,6 +30,7 @@ async function seed() {
     User.create({
       // name: 'Theodore Laurence',
       email: 'teddy@laurence.com',
+      username: 'laurie',
       password: 'jo4ever',
       address: '123 Little Drive',
       city: 'Concord',

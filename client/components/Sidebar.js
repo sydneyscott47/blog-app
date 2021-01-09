@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 //import {fetchAllPosts} from '../store/posts'
 
 const Sidebar = props => {
-  console.log('sidebar loaded')
   return (
     <aside>
       <Link
@@ -14,7 +13,14 @@ const Sidebar = props => {
       >
         <h2>All Posts</h2>
       </Link>
-      {/* Allows customers to filter posts by searching */}
+      <Link
+        to="/createPost"
+        className={props.filter === '' ? 'filter_on' : 'filter'}
+        //onClick={() => props.getItems()}
+      >
+        <h2>Create Post</h2>
+      </Link>
+      {/* Allows users to filter posts by searching */}
       <h2>Search:</h2>
       <Link
         to="/"
@@ -22,13 +28,6 @@ const Sidebar = props => {
         //onClick={() => props.getItems('skin')}
       >
         <h2>Skin Care</h2>
-      </Link>
-      <Link
-        to="/"
-        className={props.filter === 'hair' ? 'filter_on' : 'filter'}
-        //onClick={() => props.getItems('hair')}
-      >
-        <h2>Hair Care</h2>
       </Link>
     </aside>
   )

@@ -1,99 +1,97 @@
 import axios from 'axios'
-import {setItem} from './singleItem'
-import {setFilter} from './filterType'
+import {updatePostInfo, setPost} from './singlePost'
+//import {setFilter} from './filterType'
 
-const initialItems = []
+const GET_ALL_POSTS = 'GET_ALL_POSTS'
+const DELETE_POST = 'DELETE_POST'
+const ADD_POST = 'ADD_POST'
 
-const GET_ALL_ITEMS = 'GET_ALL_ITEMS'
-const DELETE_ITEM = 'DELETE_ITEM'
-const ADD_ITEM = 'ADD_ITEM'
-
-const getAllItems = items => {
+const getAllPosts = posts => {
   return {
-    type: GET_ALL_ITEMS,
-    items: items
+    type: GET_ALL_POSTS,
+    posts
   }
 }
 
-const removeItem = item => {
+const removePost = post => {
   return {
-    type: DELETE_ITEM,
-    item
+    type: DELETE_POST,
+    post
   }
 }
 
-const addItem = item => {
+const addPost = post => {
   return {
-    type: ADD_ITEM,
-    item
+    type: ADD_POST,
+    post
   }
 }
-//Getting all items in the data base or getting just the ones in a specific category
+
+//Getting all items in the database or getting just the ones in a specific category
 //setting the filter for styling
-export const fetchAllItems = type => {
+export const fetchAllPosts = type => {
   return async dispatch => {
     try {
       let response
       if (type) {
-        response = await axios.get(`/api/items/category/${type}`)
-        dispatch(setFilter(type))
+        response = await axios.get(`/api/posts/category/${type}`)
+        //  dispatch(setFilter(type))
       } else {
-        response = await axios.get('/api/items')
-        dispatch(setFilter(''))
+        response = await axios.get('/api/posts')
+        //  dispatch(setFilter(''))
       }
-      const items = response.data
-      dispatch(getAllItems(items))
+      const posts = response.data
+      dispatch(getAllPosts(posts))
     } catch (error) {
       console.error(error.message)
     }
   }
 }
+
 //Allowing an admin to delete an item
-export const deleteItem = item => {
+export const deletePost = post => {
   return async dispatch => {
     try {
-      if (item.inventory) {
-        throw new Error('Item still has inventory to sell')
-      } else {
-        await axios.delete(`/api/items/${item.id}`)
-        dispatch(removeItem(item))
-      }
-    } catch (error) {
-      console.error(error.message)
-    }
-  }
-}
-//creating or updating items in the inventory
-export const createOrUpdateItem = (item, history) => {
-  return async dispatch => {
-    try {
-      let newItem
-      if (item.id) {
-        newItem = await axios.put(`/api/items/${item.id}`, item)
-      } else {
-        const response = await axios.post('/api/items', item)
-        newItem = response.data
-        dispatch(addItem(newItem))
-      }
-      dispatch(setItem(newItem))
-      history.push('/admin/items')
+      await axios.delete(`/api/posts/${post.id}`)
+      dispatch(removePost(post))
     } catch (error) {
       console.error(error.message)
     }
   }
 }
 
-const itemsReducer = (items = initialItems, action) => {
+// creating a new post or updating an existing post
+export const createOrUpdatePost = post => {
+  return async dispatch => {
+    try {
+      let newPost
+      if (post.id) {
+        const {data} = await axios.put(`/api/posts/${post.id}`, post)
+        console.log(data)
+        dispatch(updatePostInfo(data))
+      } else {
+        const response = await axios.post('/api/posts', post)
+        newPost = response.data
+        dispatch(addPost(newPost))
+      }
+    } catch (error) {
+      console.error(error.message)
+    }
+  }
+}
+const initialPosts = []
+
+const postsReducer = (posts = initialPosts, action) => {
   switch (action.type) {
-    case GET_ALL_ITEMS:
-      return action.items
-    case DELETE_ITEM:
-      return items.filter(item => item.id !== action.item.id)
-    case ADD_ITEM:
-      return [...items, action.item]
+    case GET_ALL_POSTS:
+      return action.posts
+    case DELETE_POST:
+      return posts.filter(post => post.id !== action.post.id)
+    case ADD_POST:
+      return [...posts, action.post]
     default:
-      return items
+      return posts
   }
 }
 
-export default itemsReducer
+export default postsReducer
