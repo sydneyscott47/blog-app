@@ -12,9 +12,7 @@ const REMOVE_USER = 'REMOVE_USER'
  */
 const defaultUser = {}
 
-/**
- * ACTION CREATORS
- */
+// Action creators
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
 

@@ -5,11 +5,13 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import postsReducer from './posts'
 import singlePostReducer from './singlePost'
+import faveReducer from './favorites.ts'
 
 const reducer = combineReducers({
   user,
   posts: postsReducer,
-  singlePost: singlePostReducer
+  singlePost: singlePostReducer,
+  favorites: faveReducer
 })
 
 const middleware = composeWithDevTools(

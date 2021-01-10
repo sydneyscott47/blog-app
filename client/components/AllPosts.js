@@ -1,22 +1,14 @@
 import React from 'react'
 import {fetchAllPosts, deletePost} from '../store/posts'
+import {addPostToFaves} from '../store/favorites.ts'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {AiOutlineHeart, AiOutlineDelete} from 'react-icons/ai'
 
 class AllPosts extends React.Component {
-  // constructor() {
-  //   super()
-  //   this.handleAddToCart = this.handleAddToCart.bind(this)
-  // }
-
   async componentDidMount() {
     await this.props.getPosts()
   }
-
-  // async handleAddToCart(evt, item) {
-  //   evt.preventDefault()
-  //   await this.props.addToCart(item, this.props.user.id)
-  // }
 
   render() {
     const posts = this.props.posts
@@ -38,9 +30,14 @@ class AllPosts extends React.Component {
             <Link to={`/posts/${post.id}`}>
               <button type="button">Read More</button>
             </Link>
-            <button type="button" onClick={() => this.props.removePost(post)}>
-              Delete
-            </button>
+            <br />
+            {post.user &&
+              post.user.id === this.props.user.id && (
+                <AiOutlineDelete onClick={() => this.props.removePost(post)} />
+              )}
+            <AiOutlineHeart
+              onClick={() => this.props.addFave(post.id, this.props.user.id)}
+            />
           </div>
         ))}
       </div>
@@ -58,7 +55,8 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     getPosts: () => dispatch(fetchAllPosts()),
-    removePost: post => dispatch(deletePost(post))
+    removePost: post => dispatch(deletePost(post)),
+    addFave: (postId, userId) => dispatch(addPostToFaves(postId, userId))
   }
 }
 

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createOrUpdatePost} from '../store/posts'
+import {Link} from 'react-router-dom'
 
 class NewPost extends Component {
   constructor(props) {
@@ -35,15 +36,16 @@ class NewPost extends Component {
           value={this.state.content}
           onChange={evt => this.setState({content: evt.target.value})}
         />
-        <button
-          type="submit"
-          onClick={() => {
-            this.props.addPost(this.state)
-            this.setState({title: '', content: ''})
-          }}
-        >
-          Add Post
-        </button>
+        <Link to="/">
+          <button
+            type="submit"
+            onClick={() => {
+              this.props.addPost(this.state)
+            }}
+          >
+            Add Post
+          </button>
+        </Link>
       </div>
     )
   }

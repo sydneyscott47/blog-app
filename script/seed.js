@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {Post, User} = require('../server/db/models')
+const {Post, User, Favorite} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -16,31 +16,29 @@ async function seed() {
 
   const users = await Promise.all([
     User.create({
-      // name: 'Harry Potter',
       email: 'harry.potter@email.com',
       password: 'alohomora',
-      username: 'seekr7',
-      address: '4 Privet Drive',
-      city: 'Surrey',
-      state: 'NY',
-      zip: 13456,
-      card: 474747474747,
-      isAdmin: true
+      username: 'seekr7'
     }),
     User.create({
-      // name: 'Theodore Laurence',
       email: 'teddy@laurence.com',
       username: 'laurie',
-      password: 'jo4ever',
-      address: '123 Little Drive',
-      city: 'Concord',
-      state: 'MA',
-      zip: 43522,
-      card: 121212121212
+      password: 'jo4ever'
     })
   ])
 
-  console.log(`seeded ${users.length} users & ${posts.length} items`)
+  const favorites = await Promise.all([
+    Favorite.create({
+      userId: 1,
+      postId: 1
+    })
+  ])
+
+  console.log(
+    `seeded ${users.length} users, ${posts.length} posts, and ${
+      favorites.length
+    } favorites`
+  )
   console.log(`seeded successfully`)
 }
 
