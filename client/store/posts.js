@@ -27,18 +27,18 @@ const addPost = post => {
   }
 }
 
-//Getting all items in the database or getting just the ones in a specific category
-//setting the filter for styling
-export const fetchAllPosts = type => {
+// Getting all posts or filtered by title/author
+export const fetchAllPosts = filters => {
   return async dispatch => {
     try {
       let response
-      if (type) {
-        response = await axios.get(`/api/posts/category/${type}`)
-        //  dispatch(setFilter(type))
+      if (filters) {
+        if (filters.title)
+          response = await axios.get(`/api/posts/filter/${filters.title}`)
+        else if (filters.author)
+          response = await axios.get(`api/posts/filter/${filters.author}`)
       } else {
         response = await axios.get('/api/posts')
-        //  dispatch(setFilter(''))
       }
       const posts = response.data
       dispatch(getAllPosts(posts))
@@ -48,7 +48,7 @@ export const fetchAllPosts = type => {
   }
 }
 
-//Allowing an admin to delete an item
+// Deleting a post
 export const deletePost = post => {
   return async dispatch => {
     try {
@@ -60,7 +60,7 @@ export const deletePost = post => {
   }
 }
 
-// creating a new post or updating an existing post
+// Creating a new post or updating an existing post
 export const createOrUpdatePost = post => {
   return async dispatch => {
     try {
@@ -79,6 +79,7 @@ export const createOrUpdatePost = post => {
     }
   }
 }
+
 const initialPosts = []
 
 const postsReducer = (posts = initialPosts, action) => {

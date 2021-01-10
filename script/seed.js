@@ -9,8 +9,11 @@ async function seed() {
 
   const posts = await Promise.all([
     Post.create({
-      title: 'First Post',
-      content: 'Here we go!'
+      title: 'Welcome to Bloggr.',
+      content: `Feel free to have a look around. Here, you can read everyone's posts,
+      make your own post, favorite the posts you love, and remove posts from favorites
+      when you're done with 'em! Use the search bar on the left sidebar to get started.
+      You can search by title or author.`
     })
   ])
 

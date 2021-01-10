@@ -11,6 +11,23 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+// GETs posts with search filter
+router.get('/filter/:search', async (req, res, next) => {
+  try {
+    const posts = await Post.findAll(
+      {include: User},
+      {
+        where: {
+          title: req.params.search
+        }
+      }
+    )
+    res.send(posts)
+  } catch (error) {
+    next(error)
+  }
+})
+
 // GETs the favorites of that user
 router.get('/favorites/:userId', async (req, res, next) => {
   try {
