@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {getFaves, removePostFromFaves} from '../store/favorites.ts'
 import Sidebar from './Sidebar'
+import {AiFillHeart} from 'react-icons/ai'
 
 class Favorites extends React.Component {
   async componentDidMount() {
@@ -19,9 +20,6 @@ class Favorites extends React.Component {
           {posts.map(post => (
             <div className="product" key={post.id}>
               <div>
-                <img src="" />
-              </div>
-              <div>
                 <div className="main">
                   <h3>{post.title}</h3>
                 </div>
@@ -33,14 +31,11 @@ class Favorites extends React.Component {
               </Link>
               <br />
               {this.props.user && (
-                <button
-                  type="button"
+                <AiFillHeart
                   onClick={() =>
                     this.props.removeFromFaves(post.id, this.props.user.id)
                   }
-                >
-                  Remove from Favorites
-                </button>
+                />
               )}
             </div>
           ))}

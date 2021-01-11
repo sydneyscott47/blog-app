@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {fetchAllPosts} from '../store/posts'
+import {filterPosts} from '../store/posts'
 
 class Sidebar extends Component {
   constructor(props) {
@@ -17,20 +17,25 @@ class Sidebar extends Component {
       <aside>
         <Link
           to="/"
-          className={this.props.filter === '' ? 'filter' : 'filter_on'}
-          //onClick={() => props.getItems()}
+          className={this.props.filter === '' ? 'filter_on' : 'filter'}
         >
           <h2>All Posts</h2>
         </Link>
         <Link
           to="/createPost"
           className={this.props.filter === '' ? 'filter_on' : 'filter'}
-          //onClick={() => props.getItems()}
         >
           <h2>Create Post</h2>
         </Link>
+        <Link
+          to="/favorites"
+          className={this.props.filter === '' ? 'filter_on' : 'filter'}
+        >
+          <h2>Favorites</h2>
+        </Link>
+
         {/* Allows users to filter posts by searching by title and/or author */}
-        <h2>Search:</h2>
+        <h2>Search Posts:</h2>
         <input
           type="text"
           placeholder="Search by title"
@@ -44,7 +49,13 @@ class Sidebar extends Component {
           value={this.state.author}
           onChange={event => this.setState({author: event.target.value})}
         />
-        <button type="submit" onClick={() => this.props.getPosts(this.state)}>
+        <button
+          type="submit"
+          onClick={() => {
+            this.props.filterPosts(this.state)
+            this.setState({title: '', author: ''})
+          }}
+        >
           Enter
         </button>
       </aside>
@@ -52,10 +63,16 @@ class Sidebar extends Component {
   }
 }
 
-const mapDispatch = dispatch => {
+const mapState = state => {
   return {
-    getPosts: filters => dispatch(fetchAllPosts(filters))
+    filter: state.filter
   }
 }
 
-export default connect(null, mapDispatch)(Sidebar)
+const mapDispatch = dispatch => {
+  return {
+    filterPosts: state => dispatch(filterPosts(state))
+  }
+}
+
+export default connect(mapState, mapDispatch)(Sidebar)

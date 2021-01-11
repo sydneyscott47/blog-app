@@ -1,6 +1,5 @@
 import axios from 'axios'
-import {updatePostInfo, setPost} from './singlePost'
-//import {setFilter} from './filterType'
+import {updatePostInfo} from './singlePost'
 
 const GET_ALL_POSTS = 'GET_ALL_POSTS'
 const DELETE_POST = 'DELETE_POST'
@@ -27,19 +26,11 @@ const addPost = post => {
   }
 }
 
-// Getting all posts or filtered by title/author
-export const fetchAllPosts = filters => {
+// Getting all posts
+export const fetchAllPosts = () => {
   return async dispatch => {
     try {
-      let response
-      if (filters) {
-        if (filters.title)
-          response = await axios.get(`/api/posts/filter/${filters.title}`)
-        else if (filters.author)
-          response = await axios.get(`api/posts/filter/${filters.author}`)
-      } else {
-        response = await axios.get('/api/posts')
-      }
+      let response = await axios.get('/api/posts')
       const posts = response.data
       dispatch(getAllPosts(posts))
     } catch (error) {
@@ -67,13 +58,31 @@ export const createOrUpdatePost = post => {
       let newPost
       if (post.id) {
         const {data} = await axios.put(`/api/posts/${post.id}`, post)
-        console.log(data)
         dispatch(updatePostInfo(data))
       } else {
         const response = await axios.post('/api/posts', post)
         newPost = response.data
         dispatch(addPost(newPost))
       }
+    } catch (error) {
+      console.error(error.message)
+    }
+  }
+}
+
+export const filterPosts = filter => {
+  return async dispatch => {
+    try {
+      let response
+      if (filter.title) {
+        response = await axios.get(`/api/posts/filter/title/${filter.title}`)
+      } else if (filter.author) {
+        response = await axios.get(`/api/posts/filter/author/${filter.author}`)
+      } else {
+        response = await axios.get('/api/posts')
+      }
+      let posts = response.data
+      dispatch(getAllPosts(posts))
     } catch (error) {
       console.error(error.message)
     }

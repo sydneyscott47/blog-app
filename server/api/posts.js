@@ -1,27 +1,11 @@
 const router = require('express').Router()
 const {Post, User, Favorite} = require('../db/models')
+const {Op} = require('sequelize')
 
 // GETs all posts
 router.get('/', async (req, res, next) => {
   try {
     const posts = await Post.findAll({include: User})
-    res.send(posts)
-  } catch (error) {
-    next(error)
-  }
-})
-
-// GETs posts with search filter
-router.get('/filter/:search', async (req, res, next) => {
-  try {
-    const posts = await Post.findAll(
-      {include: User},
-      {
-        where: {
-          title: req.params.search
-        }
-      }
-    )
     res.send(posts)
   } catch (error) {
     next(error)
@@ -47,27 +31,47 @@ router.get('/favorites/:userId', async (req, res, next) => {
   }
 })
 
-// GET /api/items/category/:category
-// router.get('/category/:category', async (req, res, next) => {
-//   try {
-//     const items = await Item.findAll({where: {category: req.params.category}})
-//     if (!items.length) {
-//       const err = new Error('No items were found')
-//       err.status = 404
-//       next(err)
-//     }
-//     res.send(items)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+// GETs the posts matching a search for title
+router.get('/filter/title/:search', async (req, res, next) => {
+  try {
+    let titleString = req.params.search
+    const posts = await Post.findAll({
+      where: {
+        title: {[Op.iLike]: `%${titleString}%`}
+      },
+      include: User
+    })
+
+    if (!posts) res.send('')
+    else res.send(posts)
+  } catch (error) {
+    next(error)
+  }
+})
+
+// GETs the posts matching a search for author
+router.get('/filter/author/:search', async (req, res, next) => {
+  try {
+    let posts = await Post.findAll({
+      include: {
+        model: User,
+        where: {
+          username: req.params.search
+        }
+      }
+    })
+
+    if (!posts) res.send('')
+    else res.send(posts)
+  } catch (error) {
+    next(error)
+  }
+})
 
 // GETs single post
 router.get('/:postId', async (req, res, next) => {
   try {
-    const post = await Post.findByPk(req.params.postId, {
-      include: [User]
-    })
+    const post = await Post.findByPk(req.params.postId, {include: User})
     if (post) {
       res.send(post)
     } else {
