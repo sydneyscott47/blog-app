@@ -8,9 +8,10 @@ import {
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {AiOutlineHeart, AiOutlineDelete, AiFillHeart} from 'react-icons/ai'
-//import { IconContext } from "react-icons";
+import {BsPencil} from 'react-icons/bs'
+import UpdatePost from './UpdatePost'
 
-class AllPosts extends React.Component {
+class AllPosts extends React.Component<any, any> {
   constructor(props) {
     super(props)
     this.state = {
@@ -37,12 +38,10 @@ class AllPosts extends React.Component {
               <div className="main">
                 <h3>{post.title}</h3>
               </div>
-              {post.user && <div>By: {post.user.username}</div>}
               <p>{post.content}</p>
+              <hr />
+              {post.user && <div>By: {post.user.username}</div>}
             </div>
-            <Link to={`/posts/${post.id}`}>
-              <button type="button">Read More</button>
-            </Link>
 
             <br />
 
@@ -50,6 +49,13 @@ class AllPosts extends React.Component {
               post.user.id === this.props.user.id && (
                 <AiOutlineDelete onClick={() => this.props.removePost(post)} />
               )}
+
+              {post.user &&
+                post.user.id === this.props.user.id && (
+                <Link to={`/update/${post.id}`}>
+                  <BsPencil />
+                </Link>
+                )}
 
             {this.state.favorites.includes(post.id) ? (
               <AiFillHeart />

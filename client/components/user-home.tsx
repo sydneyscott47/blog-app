@@ -1,0 +1,51 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
+import Sidebar from './Sidebar'
+
+/**
+ * COMPONENT
+ */
+export const UserHome = props => {
+  const {username} = props
+
+  return (
+    <div className="main">
+      <Sidebar />
+      <div className="all_product_container">
+        <div className="product">
+          <h3>Welcome, {username}.</h3>
+            <p>Use the sidebar to get started. View all posts,
+            click on the heart to favorite, or create a post of your
+            own!</p>
+            <br />
+            <p>You can also use the search bar to look for posts.
+            Searching by title searches all posts for if their title includes your
+            search phrase. </p>
+            <br />
+            <p>Searching by author pulls up all posts written by the username you are
+            searching by.
+            </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/**
+ * CONTAINER
+ */
+const mapState = state => {
+  return {
+    username: state.user.username
+  }
+}
+
+export default connect(mapState)(UserHome)
+
+/**
+ * PROP TYPES
+ */
+UserHome.propTypes = {
+  email: PropTypes.string
+}

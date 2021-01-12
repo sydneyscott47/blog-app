@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {filterPosts} from '../store/posts'
 
-class Sidebar extends Component {
+class Sidebar extends Component<any, any> {
   constructor(props) {
     super(props)
     this.state = {

@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 import store from './index'
 
 const ADD_TO_FAVES = 'ADD_TO_FAVES'

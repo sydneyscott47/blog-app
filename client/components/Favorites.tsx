@@ -5,7 +5,7 @@ import {getFaves, removePostFromFaves} from '../store/favorites.ts'
 import Sidebar from './Sidebar'
 import {AiFillHeart} from 'react-icons/ai'
 
-class Favorites extends React.Component {
+class Favorites extends React.Component<any,any> {
   async componentDidMount() {
     await this.props.getFaves(this.props.user.id)
   }

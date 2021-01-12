@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, {AxiosResponse} from 'axios'
 import {updatePostInfo} from './singlePost'
 
 const GET_ALL_POSTS = 'GET_ALL_POSTS'

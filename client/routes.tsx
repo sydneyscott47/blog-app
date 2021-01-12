@@ -7,16 +7,13 @@ import {
   Signup,
   UserHome,
   HomePage,
-  SinglePost,
   NewPost,
-  Favorites
+  Favorites,
+  UpdatePost
 } from './components'
 import {me} from './store'
 
-/**
- * COMPONENT
- */
-class Routes extends Component {
+class Routes extends Component<any, any> {
   componentDidMount() {
     this.props.loadInitialData()
   }
@@ -30,13 +27,13 @@ class Routes extends Component {
         <Route exact path="/" component={HomePage} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/posts/:postId" component={SinglePost} />
         <Route path="/createPost" component={NewPost} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
             <Route path="/favorites" component={Favorites} />
+            <Route path="/update" component={UpdatePost} />
           </Switch>
         )}
         {/* Displays the HomePage component as a fallback */}
@@ -65,14 +62,10 @@ const mapDispatch = dispatch => {
   }
 }
 
-// The `withRouter` wrapper makes sure that updates are not blocked
-// when the url changes
+
 export default withRouter(connect(mapState, mapDispatch)(Routes))
 
-/**
- * PROP TYPES
- */
-Routes.propTypes = {
-  loadInitialData: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
-}
+// Routes.propTypes = {
+//   loadInitialData: PropTypes.func.isRequired,
+//   isLoggedIn: PropTypes.bool.isRequired
+// }
