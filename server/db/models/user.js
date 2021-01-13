@@ -35,14 +35,14 @@ const User = db.define('user', {
 module.exports = User
 
 /**
- * instanceMethods
+ * instance Methods
  */
 User.prototype.correctPassword = function(candidatePwd) {
   return User.encryptPassword(candidatePwd, this.salt()) === this.password()
 }
 
 /**
- * classMethods
+ * class Methods
  */
 User.generateSalt = function() {
   return crypto.randomBytes(16).toString('base64')

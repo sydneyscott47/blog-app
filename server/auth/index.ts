@@ -1,6 +1,7 @@
-const router = require('express').Router()
-const User = require('../db/models/user')
-module.exports = router
+import * as express from 'express'
+let router = express.Router()
+
+import * as User from '../db/models/user'
 
 router.post('/login', async (req, res, next) => {
   try {
@@ -41,3 +42,5 @@ router.post('/logout', (req, res) => {
 router.get('/me', (req, res) => {
   res.json(req.user)
 })
+
+export default router;

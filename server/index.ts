@@ -1,31 +1,23 @@
-const path = require('path')
-const express = require('express')
-const morgan = require('morgan')
-const compression = require('compression')
-const session = require('express-session')
-const passport = require('passport')
-const SequelizeStore = require('connect-session-sequelize')(session.Store)
-const db = require('./db')
-const sessionStore = new SequelizeStore({db})
+import * as path from 'path';
+import * as express from 'express';
+import * as morgan from 'morgan';
+import * as io from 'socket.io';
+import * as passport from 'passport';
+import * as compression from 'compression';
+import auth from './auth'
+import api from './api'
+
+import socket from './socket'
+import db from './db';
+
+import * as session from 'express-session'
+// import SequelizeStore from 'connect-session-sequelize'
+// const SqlStore = SequelizeStore(session.Store)
+// const sessionStore = new SqlStore({db})
+
 const PORT = process.env.PORT || 8000
 const app = express()
-const socketio = require('socket.io')
-module.exports = app
 
-// This is a global Mocha hook, used for resource cleanup.
-// Otherwise, Mocha v4+ never quits after tests.
-if (process.env.NODE_ENV === 'test') {
-  after('close the session store', () => sessionStore.stopExpiringSessions())
-}
-
-/**
- * In your development environment, you can keep all of your
- * app's secret API keys in a file called `secrets.js`, in your project
- * root. This file is included in the .gitignore - it will NOT be tracked
- * or show up on Github. On your production server, you can add these
- * keys as environment variables, so that they can still be read by the
- * Node process on process.env
- */
 if (process.env.NODE_ENV !== 'production') require('../secrets')
 
 // passport registration
@@ -40,6 +32,15 @@ passport.deserializeUser(async (id, done) => {
   }
 })
 
+class ErrorHandler extends Error {
+  constructor(
+    public status: number,
+    public message: string
+  ) {
+    super();
+  }
+}
+
 const createApp = () => {
   // logging middleware
   app.use(morgan('dev'))
@@ -51,21 +52,12 @@ const createApp = () => {
   // compression middleware
   app.use(compression())
 
-  // session middleware with passport
-  app.use(
-    session({
-      secret: process.env.SESSION_SECRET || 'my best friend is Cody',
-      store: sessionStore,
-      resave: false,
-      saveUninitialized: false
-    })
-  )
   app.use(passport.initialize())
   app.use(passport.session())
 
   // auth and api routes
-  app.use('/auth', require('./auth'))
-  app.use('/api', require('./api'))
+  app.use('/auth', auth)
+  app.use('/api', api)
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))
@@ -73,8 +65,7 @@ const createApp = () => {
   // any remaining requests with an extension (.js, .css, etc.) send 404
   app.use((req, res, next) => {
     if (path.extname(req.path).length) {
-      const err = new Error('Not found')
-      err.status = 404
+      const err = new ErrorHandler(404, 'Not found')
       next(err)
     } else {
       next()
@@ -87,7 +78,7 @@ const createApp = () => {
   })
 
   // error handling endware
-  app.use((err, req, res, next) => {
+  app.use((err: ErrorHandler, req, res, next) => {
     console.error(err)
     console.error(err.stack)
     res.status(err.status || 500).send(err.message || 'Internal server error.')
@@ -95,21 +86,17 @@ const createApp = () => {
 }
 
 const startListening = () => {
-  // start listening (and create a 'server' object representing our server)
-  const server = app.listen(PORT, () =>
+  const server = app.listen(PORT, () => {
     console.log(`Mixing it up on port ${PORT}`)
+  //  db.sync().then(() => console.log('Database is synced'));
+  }
   )
-
-  // set up our socket control center
-  const io = socketio(server)
-  require('./socket')(io)
+  const socketIo = io(server);
+  socket(socketIo);
 }
 
-const syncDb = () => db.sync()
-
 async function bootApp() {
-  await sessionStore.sync()
-  await syncDb()
+//  await sessionStore.sync()
   await createApp()
   await startListening()
 }
@@ -122,3 +109,5 @@ if (require.main === module) {
 } else {
   createApp()
 }
+
+export default app;

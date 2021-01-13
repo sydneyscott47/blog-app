@@ -1,15 +1,14 @@
 import React from 'react'
-import {fetchAllPosts, deletePost} from '../store/posts'
-import {
-  addPostToFaves,
-  getFaves,
-  removePostFromFaves
-} from '../store/favorites.ts'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+
+import {fetchAllPosts, deletePost} from '../store/posts'
+import {addPostToFaves,getFaves} from '../store/favorites'
+
+import UpdatePost from './UpdatePost'
+
 import {AiOutlineHeart, AiOutlineDelete, AiFillHeart} from 'react-icons/ai'
 import {BsPencil} from 'react-icons/bs'
-import UpdatePost from './UpdatePost'
 
 class AllPosts extends React.Component<any, any> {
   constructor(props) {
@@ -22,6 +21,10 @@ class AllPosts extends React.Component<any, any> {
   async componentDidMount() {
     await this.props.getPosts()
     await this.props.getFaves(this.props.user.id)
+
+    if (this.props.user) {
+      this.props.favorites.forEach(fave => this.setState({favorites: [...this.state.favorites, fave.id]}))
+    }
   }
 
   render() {
@@ -38,7 +41,7 @@ class AllPosts extends React.Component<any, any> {
               <div className="main">
                 <h3>{post.title}</h3>
               </div>
-              <p>{post.content}</p>
+                <p>{post.content}</p>
               <hr />
               {post.user && <div>By: {post.user.username}</div>}
             </div>
@@ -77,7 +80,8 @@ class AllPosts extends React.Component<any, any> {
 const mapState = state => {
   return {
     posts: state.posts,
-    user: state.user
+    user: state.user,
+    favorites: state.favorites
   }
 }
 
@@ -87,8 +91,6 @@ const mapDispatch = dispatch => {
     removePost: post => dispatch(deletePost(post)),
     addFave: (postId, userId) => dispatch(addPostToFaves(postId, userId)),
     getFaves: id => dispatch(getFaves(id)),
-    removeFromFaves: (postId, userId) =>
-      dispatch(removePostFromFaves(postId, userId))
   }
 }
 

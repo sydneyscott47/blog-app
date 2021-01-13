@@ -1,11 +1,9 @@
 const isDev = process.env.NODE_ENV === 'development'
+const path = require('path')
 
 module.exports = {
   mode: isDev ? 'development' : 'production',
-  entry: [
-    '@babel/polyfill', // enables async-await
-    './client/index.tsx'
-  ],
+  entry: ['@babel/polyfill', './client/index.tsx'],
   output: {
     path: __dirname,
     filename: './public/bundle.js'
@@ -22,7 +20,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: 'ts-loader',
-        exclude: /node_modules/
+        exclude: [/tests/, /node_modules/]
       },
       {
         test: /\.js$/,

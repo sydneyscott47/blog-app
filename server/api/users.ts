@@ -1,6 +1,9 @@
-const router = require('express').Router()
-const {User} = require('../db/models')
-module.exports = router
+import * as express from 'express'
+let router = express.Router()
+
+import {User} from '../db/models'
+
+export default router
 
 router.get('/', async (req, res, next) => {
   try {

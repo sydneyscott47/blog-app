@@ -1,5 +1,6 @@
-const router = require('express').Router()
-const {Post, User, Favorite} = require('../db/models')
+import * as express from 'express'
+let router = express.Router()
+import {Post, User, Favorite} from '../db/models'
 const {Op} = require('sequelize')
 
 // GETs all posts
@@ -76,7 +77,6 @@ router.get('/:postId', async (req, res, next) => {
       res.send(post)
     } else {
       const err = new Error('Post not found')
-      err.status = 404
       next(err)
     }
   } catch (error) {
@@ -150,4 +150,4 @@ router.delete('/favorites/:postId&:userId', async (req, res, next) => {
   }
 })
 
-module.exports = router
+export default router;

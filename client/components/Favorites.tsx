@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {getFaves, removePostFromFaves} from '../store/favorites.ts'
 import Sidebar from './Sidebar'
 import {AiFillHeart} from 'react-icons/ai'
@@ -23,12 +22,10 @@ class Favorites extends React.Component<any,any> {
                 <div className="main">
                   <h3>{post.title}</h3>
                 </div>
+                  <p>{post.content}</p>
+                <hr />
                 {post.user && <div>By: {post.user.username}</div>}
-                <p>{post.content}</p>
               </div>
-              <Link to={`/posts/${post.id}`}>
-                <button type="button">Read More</button>
-              </Link>
               <br />
               {this.props.user && (
                 <AiFillHeart
