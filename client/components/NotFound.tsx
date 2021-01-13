@@ -1,6 +1,5 @@
 import React from 'react'
 import Sidebar from './Sidebar'
-import {connect} from 'react-redux'
 
 export const NotFound = () => {
 
@@ -17,14 +16,4 @@ export const NotFound = () => {
   )
 }
 
-
-/**
- * CONTAINER
- */
-const mapState = state => {
-  return {
-    username: state.user.username
-  }
-}
-
-export default connect(mapState)(NotFound)
+export default NotFound

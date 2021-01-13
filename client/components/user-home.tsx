@@ -1,11 +1,8 @@
-import React from 'react'
+import * as React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import Sidebar from './Sidebar'
 
-/**
- * COMPONENT
- */
 export const UserHome = props => {
   const {username} = props
 
@@ -14,7 +11,7 @@ export const UserHome = props => {
       <Sidebar />
       <div className="all_post_container">
         <div className="post">
-          <h3>Welcome, {username}.</h3>
+          <h3 data-testid="header">Welcome, {username}.</h3>
             <p>Use the sidebar to get started. View all posts,
             click on the heart to favorite, or create a post of your
             own!</p>
@@ -32,9 +29,6 @@ export const UserHome = props => {
   )
 }
 
-/**
- * CONTAINER
- */
 const mapState = state => {
   return {
     username: state.user.username

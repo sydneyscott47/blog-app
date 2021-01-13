@@ -7,18 +7,19 @@ import Sidebar from './Sidebar'
 /**
  * COMPONENT
  */
-const AuthForm = props => {
+export const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
     <div className="main">
-        <Sidebar />
-      <form onSubmit={handleSubmit} name={name}>
+      <form onSubmit={handleSubmit}
+            name={name}
+            data-testid="auth-form">
         <div>
           <label htmlFor="email">
             <small>Email</small>
           </label>
-          <input name="email" type="text" />
+          <input name="email" type="text" data-testid="email" />
         </div>
         {(name === "signup") && <div>
           <label htmlFor="username">
@@ -30,7 +31,7 @@ const AuthForm = props => {
           <label htmlFor="password">
             <small>Password</small>
           </label>
-          <input name="password" type="password" />
+          <input name="password" type="password" data-testid="password" />
         </div>
         <div>
           <button type="submit">{displayName}</button>
