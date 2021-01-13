@@ -6,7 +6,7 @@ import db from '../db'
 User.hasMany(Post)
 Post.belongsTo(User)
 
-const Favorite = db.define<any,FavoriteAttributes>('favorite', {})
+const Favorite = db.define('favorite', {})
 
 User.belongsToMany(Post, {through: Favorite})
 Post.belongsToMany(User, {through: Favorite})

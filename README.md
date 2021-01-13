@@ -21,19 +21,23 @@ npm run start-dev
 
 The Bloggr homepage is viewable to all, whether guests or users.
 
+<img src="https://i.ibb.co/5hY4HJm/Screen-Shot-2021-01-12-at-11-43-51-PM.png" alt="homePage" />
+
 Guests have the ability to log in or create a new account.
+
+<img src="https://i.ibb.co/Pw0WPsy/Screen-Shot-2021-01-13-at-1-26-50-AM.png" alt="signup" />
 
 Logging in gives access to a user homepage.
 
 <img src="https://i.ibb.co/B4szG1D/user-home.png" alt="userHome" />
 
-Only logged in users have the ability to favorite posts. (by clicking the heart icon).
+Only logged-in users have the ability to favorite posts (by clicking the heart icon). From the favorites page, users can click on the heart icon again to unfavorite.
 
-Logged in users can also write new posts.
+<img src="https://s2.gifyu.com/images/Favoriting-1.gif" alt="favoriting" />
+
+Logged-in users can also write new posts.
 
 Users can delete or edit the posts (by clicking the trash or pencil icons) that they themselves have made.
-
-From the favorites page, users can click on the heart icon again to unfavorite.
 
 ## Architecture
 

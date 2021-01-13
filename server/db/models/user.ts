@@ -8,9 +8,12 @@ export interface UserInstance extends Sequelize.Instance<UserAttributes>, UserAt
   getPost: Sequelize.HasManyGetAssociationsMixin<PostInstance>;
   setPost: Sequelize.HasManySetAssociationsMixin<PostInstance, PostInstance['id']>;
   createPost: Sequelize.HasManyCreateAssociationMixin<PostInstance>;
+  encryptPassword: any,
+  generateSalt: any,
+  correctPassword: any,
 }
 
-export const User = db.define<UserInstance, UserAttributes>('user', {
+export const User = db.define('user', {
   email: {
     type: Sequelize.STRING,
     unique: true,
