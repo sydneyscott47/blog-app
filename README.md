@@ -55,6 +55,8 @@ Data flow in Flux is unidirectional. Using React-Redux, the Bloggr app features 
 
 There are [slight differences](https://www.educba.com/redux-vs-flux/) between Redux and Flux, but they follow the same logic and pattern in establishing data flow.
 
+### User Interface
+
 The UI features the following React components, written in TypeScript:
 
 * HomePage
@@ -68,6 +70,8 @@ The UI features the following React components, written in TypeScript:
 * UserHome
 * Auth-form
 
+### Code Design
+
 _Relationships_: State is managed by the Redux store and holds all of the posts to display, the logged-in user, and the logged-in user's favorite posts.
 
 _Best practices_: Front-end components are DRY and reusable. For instance, the auth-form component is leveraged for both logging in and signing up purposes. Using Redux allows for a single source of truth in the app, meaning that users cannot access or modify the store directly.
@@ -78,6 +82,15 @@ There is also a many-to-many relationship between Users and Posts with the throu
 ## Testing
 
 To run the suite of tests, run `npm test` in the command line.
+
+## Future Directions
+
+This project was completed on a 7-day deadline. Given more time, these are the features I would build out next:
+
+* _Protecting API routes_: Restricting user access to admins and restricting access to update/delete routes to only the users who authored those posts
+* _Testing_: Writing more unit tests and ensuring that all unit tests run correctly
+* _Leveraging TypeScript_: Adding further typing to the front and back end
+* _Deploying_: Deploying the code to a live site using a platform such as Heroku
 
 ## Authors
 

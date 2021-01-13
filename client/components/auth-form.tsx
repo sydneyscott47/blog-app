@@ -7,7 +7,15 @@ import Sidebar from './Sidebar'
 /**
  * COMPONENT
  */
-export const AuthForm = props => {
+
+type AuthFormTypes = {
+   name: string,
+   displayName: () => void,
+   handleSubmit: () => void,
+   error: any,
+ }
+
+export const AuthForm = (props: AuthFormTypes) => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
