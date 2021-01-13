@@ -1,5 +1,5 @@
 import * as crypto from 'crypto'
-import Sequelize from 'sequelize';
+import * as Sequelize from 'sequelize';
 import db from '../db';
 import {UserAttributes} from '../interfaces';
 import { PostInstance } from './post';
@@ -7,7 +7,7 @@ import { PostInstance } from './post';
 export interface UserInstance extends Sequelize.Instance<UserAttributes>, UserAttributes {
   getPost: Sequelize.HasManyGetAssociationsMixin<PostInstance>;
   setPost: Sequelize.HasManySetAssociationsMixin<PostInstance, PostInstance['id']>;
-  createPost: Sequelize.HasManyCreateAssociationMixin<PostInstance, PostInstance>;
+  createPost: Sequelize.HasManyCreateAssociationMixin<PostInstance>;
 }
 
 export const User = db.define<UserInstance, UserAttributes>('user', {

@@ -1,34 +1,32 @@
+import { Dispatch } from 'redux'
 import axios, {AxiosResponse} from 'axios'
 import {updatePostInfo} from './singlePost'
+import { PostAttributes } from '../../server/db/interfaces'
 
-const GET_ALL_POSTS = 'GET_ALL_POSTS'
-const DELETE_POST = 'DELETE_POST'
-const ADD_POST = 'ADD_POST'
-
-const getAllPosts = posts => {
-  return {
-    type: GET_ALL_POSTS,
-    posts
-  }
+export enum StoreActionTypes {
+  GET_ALL_POSTS = 'GET_ALL_POSTS',
+  DELETE_POST = 'DELETE_POST',
+  ADD_POST = 'ADD_POST'
 }
 
-const removePost = post => {
-  return {
-    type: DELETE_POST,
-    post
-  }
-}
+const getAllPosts = (posts: PostAttributes[]) => ({
+    type: StoreActionTypes.GET_ALL_POSTS,
+    posts,
+})
 
-const addPost = post => {
-  return {
-    type: ADD_POST,
-    post
-  }
-}
+const removePost = (post: PostAttributes) => ({
+    type: StoreActionTypes.DELETE_POST,
+    post,
+})
+
+const addPost = (post: PostAttributes) => ({
+    type: StoreActionTypes.ADD_POST,
+    post,
+})
 
 // Getting all posts
 export const fetchAllPosts = () => {
-  return async dispatch => {
+  return async (dispatch: Dispatch) => {
     try {
       let response = await axios.get('/api/posts')
       const posts = response.data
@@ -41,7 +39,7 @@ export const fetchAllPosts = () => {
 
 // Deleting a post
 export const deletePost = post => {
-  return async dispatch => {
+  return async (dispatch: Dispatch) => {
     try {
       await axios.delete(`/api/posts/${post.id}`)
       dispatch(removePost(post))
@@ -53,7 +51,7 @@ export const deletePost = post => {
 
 // Creating a new post or updating an existing post
 export const createOrUpdatePost = post => {
-  return async dispatch => {
+  return async (dispatch: Dispatch) => {
     try {
       let newPost
       if (post.id) {
@@ -93,11 +91,11 @@ const initialPosts = []
 
 const postsReducer = (posts = initialPosts, action) => {
   switch (action.type) {
-    case GET_ALL_POSTS:
+    case StoreActionTypes.GET_ALL_POSTS:
       return action.posts
-    case DELETE_POST:
+    case StoreActionTypes.DELETE_POST:
       return posts.filter(post => post.id !== action.post.id)
-    case ADD_POST:
+    case StoreActionTypes.ADD_POST:
       return [...posts, action.post]
     default:
       return posts

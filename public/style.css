@@ -45,14 +45,14 @@ nav a {
   background-color: lightgreen;
 }
 
-/* all product styling */
+/* all post styling */
 .main {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
 }
 
-.all_product_container {
+.all_post_container {
   color: #001a33;
   display: flex;
   flex-flow: column-reverse wrap;
@@ -77,7 +77,7 @@ aside {
   color: #ffd700;
 }
 
-.product {
+.post {
   color: black;
   width: 85%;
   border: grey solid 2px;
@@ -87,7 +87,7 @@ aside {
   border-radius: 10px;
 }
 
-.product img {
+.post img {
   max-width: 100%;
   max-height: em;
   display: block;

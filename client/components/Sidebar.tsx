@@ -3,7 +3,16 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {filterPosts} from '../store/posts'
 
-class Sidebar extends Component<any, any> {
+type SidebarProps = {
+  filterPosts: (state: SidebarState) => void,
+}
+
+type SidebarState = {
+  title: string,
+  author: string,
+}
+
+class Sidebar extends Component<SidebarProps, SidebarState> {
   constructor(props) {
     super(props)
     this.state = {
@@ -17,19 +26,19 @@ class Sidebar extends Component<any, any> {
       <aside>
         <Link
           to="/"
-          className={this.props.filter === '' ? 'filter_on' : 'filter'}
+          className='filter'
         >
           <h2>All Posts</h2>
         </Link>
         <Link
           to="/createPost"
-          className={this.props.filter === '' ? 'filter_on' : 'filter'}
+          className='filter'
         >
           <h2>Create Post</h2>
         </Link>
         <Link
           to="/favorites"
-          className={this.props.filter === '' ? 'filter_on' : 'filter'}
+          className='filter'
         >
           <h2>Favorites</h2>
         </Link>
@@ -63,16 +72,10 @@ class Sidebar extends Component<any, any> {
   }
 }
 
-const mapState = state => {
-  return {
-    filter: state.filter
-  }
-}
-
 const mapDispatch = dispatch => {
   return {
     filterPosts: state => dispatch(filterPosts(state))
   }
 }
 
-export default connect(mapState, mapDispatch)(Sidebar)
+export default connect(null, mapDispatch)(Sidebar)

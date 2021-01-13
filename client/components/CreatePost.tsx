@@ -3,8 +3,20 @@ import {connect} from 'react-redux'
 import {createOrUpdatePost} from '../store/posts'
 import {Link} from 'react-router-dom'
 import Sidebar from './Sidebar'
+import { UserAttributes, PostAttributes } from "../../server/db/interfaces";
 
-class NewPost extends Component<any, any> {
+type CreatePostProps = {
+  user: UserAttributes,
+  addPost: (post: PostAttributes) => void,
+};
+
+type CreatePostState = {
+  title: string;
+  content: string;
+  userId: number
+};
+
+class NewPost extends Component<CreatePostProps, CreatePostState> {
   constructor(props) {
     super(props)
     this.state = {
@@ -19,7 +31,7 @@ class NewPost extends Component<any, any> {
       return (
         <div className="main">
           <Sidebar />
-          <div className="product">Please make an account
+          <div className="post">Please make an account
           or log in to create posts!</div>
         </div>
       )
@@ -30,7 +42,7 @@ class NewPost extends Component<any, any> {
       <div className="main">
         <Sidebar />
         <form action="/">
-          <div className="product">
+          <div className="post">
             <h2>Your thoughts go here.</h2>
             <hr />
             <div className="item">

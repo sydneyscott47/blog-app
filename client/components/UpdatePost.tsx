@@ -3,8 +3,20 @@ import {connect} from 'react-redux'
 import {createOrUpdatePost} from '../store/posts'
 import {Link} from 'react-router-dom'
 import Sidebar from './Sidebar'
+import { PostAttributes } from "../../server/db/interfaces";
 
-class UpdatePost extends Component<any, any> {
+type UpdatePostProps = {
+  location: any,
+  addPost: (post: PostAttributes) => void,
+};
+
+type UpdatePostState = {
+  title: string;
+  content: string;
+  postId: number
+};
+
+class UpdatePost extends Component<UpdatePostProps, UpdatePostState> {
   constructor(props) {
     super(props)
     this.state = {
@@ -25,7 +37,7 @@ class UpdatePost extends Component<any, any> {
       <div className="main">
         <Sidebar />
         <form action="/">
-          <div className="product">
+          <div className="post">
             <h2>Edit post</h2>
             <hr />
             <div className="item">

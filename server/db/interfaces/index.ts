@@ -11,6 +11,7 @@ interface PostAttributes {
   id?: number;
   title: string;
   content?: string;
+  user?: any;
   readonly createdAt?: Date;
   readonly updatedAt?: Date;
 }

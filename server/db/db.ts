@@ -1,4 +1,4 @@
-import Sequelize from 'sequelize';
+import { Sequelize, Model, DataTypes } from 'sequelize';
 
 let databaseName;
 

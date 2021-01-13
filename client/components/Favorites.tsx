@@ -3,8 +3,16 @@ import {connect} from 'react-redux'
 import {getFaves, removePostFromFaves} from '../store/favorites.ts'
 import Sidebar from './Sidebar'
 import {AiFillHeart} from 'react-icons/ai'
+import { UserAttributes, FavoriteAttributes, PostAttributes } from "../../server/db/interfaces";
 
-class Favorites extends React.Component<any,any> {
+type FavoritesProps = {
+  getFaves: (id: number) => void,
+  removeFromFaves: (postId: number, userId: number) => void,
+  favorites: PostAttributes[],
+  user: UserAttributes
+}
+
+class Favorites extends React.Component<FavoritesProps> {
   async componentDidMount() {
     await this.props.getFaves(this.props.user.id)
   }
@@ -17,7 +25,7 @@ class Favorites extends React.Component<any,any> {
       return (
         <div className="main">
           <Sidebar />
-          <div className="product">
+          <div className="post">
             <p>No favorites yet!</p>
           </div>
         </div>
@@ -27,9 +35,9 @@ class Favorites extends React.Component<any,any> {
     return (
       <div className="main">
         <Sidebar />
-        <div className="all_product_container">
+        <div className="all_post_container">
           {posts.map(post => (
-            <div className="product" key={post.id}>
+            <div className="post" key={post.id}>
               <div>
                 <div className="main">
                   <h3>{post.title}</h3>

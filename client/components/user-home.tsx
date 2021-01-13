@@ -12,8 +12,8 @@ export const UserHome = props => {
   return (
     <div className="main">
       <Sidebar />
-      <div className="all_product_container">
-        <div className="product">
+      <div className="all_post_container">
+        <div className="post">
           <h3>Welcome, {username}.</h3>
             <p>Use the sidebar to get started. View all posts,
             click on the heart to favorite, or create a post of your

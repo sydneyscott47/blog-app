@@ -1,16 +1,28 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-
 import {fetchAllPosts, deletePost} from '../store/posts'
-import {addPostToFaves,getFaves} from '../store/favorites'
-
+import {addPostToFaves, getFaves} from '../store/favorites'
 import UpdatePost from './UpdatePost'
-
 import {AiOutlineHeart, AiOutlineDelete, AiFillHeart} from 'react-icons/ai'
 import {BsPencil} from 'react-icons/bs'
+import { UserAttributes, PostAttributes } from "../../server/db/interfaces";
 
-class AllPosts extends React.Component<any, any> {
+type AllPostProps = {
+  getPosts: () => void,
+  getFaves: (id: number) => void,
+  addFave: (postId: number, userId: number) => void,
+  removePost: (post: PostAttributes) => void,
+  user: UserAttributes,
+  favorites: PostAttributes[],
+  posts: PostAttributes[],
+}
+
+type AllPostState = {
+  favorites: number[],
+}
+
+class AllPosts extends React.Component<AllPostProps, AllPostState> {
   constructor(props) {
     super(props)
     this.state = {
@@ -31,9 +43,9 @@ class AllPosts extends React.Component<any, any> {
     const posts = this.props.posts
 
     return (
-      <div className="all_product_container">
+      <div className="all_post_container">
         {posts.map(post => (
-          <div className="product" key={post.id}>
+          <div className="post" key={post.id}>
             <div>
               <img src="" />
             </div>
@@ -60,7 +72,8 @@ class AllPosts extends React.Component<any, any> {
                 </Link>
                 )}
 
-            {this.state.favorites.includes(post.id) ? (
+            {this.props.user.id &&
+              (this.state.favorites.includes(post.id) ? (
               <AiFillHeart />
             ) : (
               <AiOutlineHeart
@@ -69,7 +82,7 @@ class AllPosts extends React.Component<any, any> {
                   this.setState({favorites: [...this.state.favorites, post.id]})
                 }}
               />
-            )}
+            ))}
           </div>
         ))}
       </div>

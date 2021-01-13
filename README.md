@@ -1,12 +1,18 @@
 # Bloggr
 
+Welcome to Bloggr, a simple CRUD app for users to view and create blog posts.
+
+Bloggr was built with TypeScript, React, and Redux on the front end, and TypeScript, Node, and Express on the back end. It uses a PostreSQL database implemented with Sequelize.
+
 ## Setup
 
-To run Bloggr on your local machine, run the following commands:
+To run Bloggr on your local machine, run the following commands. Note that you must have PostreSQL installed.
 
 ```
-git clone https://github.com/FullstackAcademy/boilermaker.git
+git clone https://github.com/sydneyscott47/blog-app.git
 npm install
+createdb blog-app
+createdb blog-app-test
 npm run seed
 npm run start-dev
 ```
@@ -15,11 +21,13 @@ npm run start-dev
 
 The Bloggr homepage is viewable to all, whether guests or users.
 
+Guests have the ability to log in or create a new account.
+
 Logging in gives access to a user homepage.
 
 <img src="https://i.ibb.co/B4szG1D/user-home.png" alt="userHome" />
 
-Only logged in users have the ability to favorite (by clicking the heart icon).
+Only logged in users have the ability to favorite posts. (by clicking the heart icon).
 
 Logged in users can also write new posts.
 
@@ -27,27 +35,13 @@ Users can delete or edit the posts (by clicking the trash or pencil icons) that 
 
 From the favorites page, users can click on the heart icon again to unfavorite.
 
-Guests have the ability to log in or create a new account.
-
 ## Architecture
 
-Running `npm run start-dev` will make great things happen!
-
-If you want to run the server and/or `webpack` separately, you can also
-`npm run start-server` and `npm run build-client`.
-
-From there, just follow your bliss.
+This app follows the \_\_ style.
 
 ## Testing
 
-Ready to go world wide? Here's a guide to deployment! There are two
-supported ways to deploy in Boilermaker:
-
-* automatically, via continuous deployment with Travis.
-* "manually", from your local machine via the `deploy` script.
-
-Either way, you'll need to set up your deployment server to start.
-The steps below are also covered in the CI/CD workshop.
+To test the app, run `npm test` in the command line.
 
 ### Heroku
 
@@ -69,7 +63,7 @@ The steps below are also covered in the CI/CD workshop.
   1.  `heroku git:remote your-app-name` You'll need to be a
       collaborator on the app.
 
-### Authors
+## Authors
 
 * Sydney Scott
 * Fullstack Academy for the boilerplate code
