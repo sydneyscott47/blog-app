@@ -1,7 +1,7 @@
 import * as express from 'express'
 let router = express.Router()
 
-import * as User from '../db/models/user'
+import {User} from '../db/models/user'
 
 router.post('/login', async (req, res, next) => {
   try {

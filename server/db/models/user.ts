@@ -1,8 +1,16 @@
-const crypto = require('crypto')
-const Sequelize = require('sequelize')
-const db = require('../db')
+import * as crypto from 'crypto'
+import Sequelize from 'sequelize';
+import db from '../db';
+import {UserAttributes} from '../interfaces';
+import { PostInstance } from './post';
 
-const User = db.define('user', {
+export interface UserInstance extends Sequelize.Instance<UserAttributes>, UserAttributes {
+  getPost: Sequelize.HasManyGetAssociationsMixin<PostInstance>;
+  setPost: Sequelize.HasManySetAssociationsMixin<PostInstance, PostInstance['id']>;
+  createPost: Sequelize.HasManyCreateAssociationMixin<PostInstance, PostInstance>;
+}
+
+export const User = db.define<UserInstance, UserAttributes>('user', {
   email: {
     type: Sequelize.STRING,
     unique: true,
@@ -31,8 +39,6 @@ const User = db.define('user', {
     }
   }
 })
-
-module.exports = User
 
 /**
  * instance Methods
