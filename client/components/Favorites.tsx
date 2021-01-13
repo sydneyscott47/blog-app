@@ -10,7 +10,19 @@ class Favorites extends React.Component<any,any> {
   }
 
   render() {
+    console.log(this.props)
     const posts = this.props.favorites
+
+    if (!posts.length) {
+      return (
+        <div className="main">
+          <Sidebar />
+          <div className="product">
+            <p>No favorites yet!</p>
+          </div>
+        </div>
+      )
+    }
 
     return (
       <div className="main">

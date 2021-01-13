@@ -9,7 +9,8 @@ import {
   HomePage,
   NewPost,
   Favorites,
-  UpdatePost
+  UpdatePost,
+  NotFound
 } from './components'
 import {me} from './store'
 
@@ -27,17 +28,17 @@ class Routes extends Component<any, any> {
         <Route exact path="/" component={HomePage} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/createPost" component={NewPost} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
             <Route path="/favorites" component={Favorites} />
             <Route path="/update" component={UpdatePost} />
+            <Route path="/createPost" component={NewPost} />
           </Switch>
         )}
-        {/* Displays the HomePage component as a fallback */}
-        <Route component={HomePage} />
+        {/* Displays the Not Found component for anything else */}
+        <Route component={NotFound} />
       </Switch>
     )
   }

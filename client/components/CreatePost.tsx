@@ -16,7 +16,13 @@ class NewPost extends Component<any, any> {
 
   render() {
     if (!this.props.user.id)
-      return <div>Please make an account to create posts!</div>
+      return (
+        <div className="main">
+          <Sidebar />
+          <div className="product">Please make an account
+          or log in to create posts!</div>
+        </div>
+      )
 
     let user = this.props.user
 

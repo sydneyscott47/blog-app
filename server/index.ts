@@ -11,9 +11,9 @@ import socket from './socket'
 import db from './db';
 
 import * as session from 'express-session'
-// import SequelizeStore from 'connect-session-sequelize'
-// const SqlStore = SequelizeStore(session.Store)
-// const sessionStore = new SqlStore({db})
+import * as SequelizeStore from 'connect-session-sequelize'
+const SqlStore = SequelizeStore(session.Store)
+const sessionStore = new SqlStore({db})
 
 const PORT = process.env.PORT || 8000
 const app = express()
@@ -52,6 +52,16 @@ const createApp = () => {
   // compression middleware
   app.use(compression())
 
+  // session middleware with passport
+ app.use(
+   session({
+     secret: process.env.SESSION_SECRET || 'my best friend is Cody',
+     store: sessionStore,
+     resave: false,
+     saveUninitialized: false
+   })
+ )
+
   app.use(passport.initialize())
   app.use(passport.session())
 
@@ -88,7 +98,7 @@ const createApp = () => {
 const startListening = () => {
   const server = app.listen(PORT, () => {
     console.log(`Mixing it up on port ${PORT}`)
-  //  db.sync().then(() => console.log('Database is synced'));
+   db.sync().then(() => console.log('Database is synced'));
   }
   )
   const socketIo = io(server);
@@ -96,7 +106,7 @@ const startListening = () => {
 }
 
 async function bootApp() {
-//  await sessionStore.sync()
+ await sessionStore.sync()
   await createApp()
   await startListening()
 }

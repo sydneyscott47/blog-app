@@ -1,6 +1,14 @@
 import Sequelize from 'sequelize';
 
-const databaseName = 'blog-app' + (process.env.NODE_ENV === 'test' ? '-test' : '')
+let databaseName;
+
+if (process.env.NODE_ENV === 'test') {
+  databaseName = 'blog-app-test'
+}
+
+else {
+  databaseName = 'blog-app'
+}
 
 const db = new Sequelize(
   process.env.DATABASE_URL ||
